@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<div id="id01"></div>
+<select id="mySelect" onchange="selectChangeEvent(this);">
+</select>
+<div id="headingField"></div>
+<div id="inputFields"></div>
+<div id="calculateButton"></div>
+<div id="outputFields"></div>
+
+<script>
+var garr;	
+function myFunction(arr,selShape,evenType) {
+  var out = "";
+  var i;
+  var j;
+  garr=arr;
+  
+if(selShape==null){
+	selShape = "Rectangle";
+	//createHeading="Rectangle";
+	createHeading(selShape);
+
+}
+
+  for(i = 0; i<arr[0].shape.length; i++) {
+  //  out += '<a href="' + arr[i].url + '">' + 
+//	arr[i].display + '</a><br>';
+	if(evenType==null){
+	out= arr[0].shape[i].shapeName;
+
+  var x = document.getElementById("mySelect");
+  var option = document.createElement("option");
+  option.text = out;
+  option.setAttribute("value",out);
+  x.add(option);
+	}
+
+//	var btn = document.createElement("BUTTON");
+ // btn.innerHTML = out;
+    
+  //br
+
+ /* document.getElementById("id01").appendChild(btn);
+
+  document.getElementById("id01").appendChild(document.createElement("br"));
+  document.getElementById("id01").appendChild(document.createElement("br"));
+  document.getElementById("id01").appendChild(document.createElement("br"));
+  document.getElementById("id01").appendChild(document.createElement("br"));*/
+  
+		for(j = 0; j<arr[0].shape[i].input.length; j++) {
+			if(selShape === arr[0].shape[i].shapeName){
+		createInput(arr[0].shape[i].input[j]);
+			}
+		}
+
+		for(j = 0; j<arr[0].shape[i].output.length; j++) {
+			if(selShape === arr[0].shape[i].shapeName){
+		createOutput(arr[0].shape[i].output[j],arr[0].shape[i].formula[j],"text");
+			}
+		}
+	
+  }
+  if(evenType==null)
+  createButton();
+
+ 
+ // document.getElementById("id01").innerHTML = out;
+}
+
+function createHeading( sel){
+	var heading = document.createElement("H1");
+	if(typeof sel === 'string') {
+		heading.innerHTML = sel;
+}else{
+	heading.innerHTML = sel.value;
+}
+
+	document.getElementById("headingField").appendChild(heading);
+
+}
+
+function selectChangeEvent( sel){
+
+	if(document.getElementById("headingField").childNodes.length === 0){
+
+	var heading = document.createElement("H1");
+	if(typeof sel === 'string') {
+		heading.innerHTML = sel;
+}else{
+	heading.innerHTML = sel.value;
+}
+document.getElementById("headingField").appendChild(heading);
+
+	}else{
+
+		document.getElementById("headingField").firstChild.innerHTML = sel.value;
+	}
+
+
+
+var node= document.getElementById("inputFields");
+var node1= document.getElementById("outputFields");
+while (node.firstChild) {
+    node.removeChild(node.firstChild);
+}
+while (node1.firstChild) {
+    node1.removeChild(node1.firstChild);
+}
+
+myFunction(garr,sel.value,"selectChangeEvent");
+
+
+	
+
+}
+
+function createButton(){
+	var button = document.createElement("BUTTON");
+	button.innerHTML = "Calculate";
+	button.addEventListener('click', calculateClicked);
+	document.getElementById("calculateButton").appendChild(button);
+
+}
+
+function createInput(filedName){
+	
+	var i = document.createElement("input"); //input element, text
+i.setAttribute('type',"text");
+i.setAttribute('name',filedName);
+i.setAttribute('value',filedName);
+
+document.getElementById("inputFields").appendChild(i);
+
+}
+
+function createOutput(filedName,formula,type){
+	var i = document.createElement("input"); //input element, text
+i.setAttribute('type',type);
+i.setAttribute('name',filedName);
+i.setAttribute('value',formula);
+
+document.getElementById("outputFields").appendChild(i);
+
+//	var str = "Visit Microsoft!";
+//var res = str.replace("Microsoft", "W3Schools");
+
+
+}
+
+function calculateClicked() {
+	
+	var inputFieldsValues = document.getElementById("inputFields").childNodes;
+	var outputFieldsValues = document.getElementById("outputFields").childNodes;
+	var res;
+	
+	for (i = 0; i < inputFieldsValues.length; i++) {
+  // c[i].node.value ;
+  // c[i].node.filedName;
+   //var str1 = "length*breadth";
+   var field1 = inputFieldsValues[i].name;
+   var val1 = inputFieldsValues[i].value;
+
+   for(j=0;j<outputFieldsValues.length;j++){
+
+    str1=outputFieldsValues[j].value;
+	str1 = str1.replace( new RegExp(field1, 'g'), val1);
+	outputFieldsValues[j].value=str1;
+	
+   }
+
+   
+  }
+ 
+  for(j=0;j<outputFieldsValues.length;j++){
+
+
+outputFieldsValues[j].value=eval(outputFieldsValues[j].value);
+
+}
+
+
+  //createOutput("test",eval(str1),"text");
+}
+
+</script>
+
+<script src="settings.js"></script>
+
+</body>
+</html>
