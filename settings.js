@@ -25,7 +25,7 @@ myFunction([
 		}  ,
 	 
 		{
-			"shapeName":"triangle",	
+			"shapeName":"Triangle",	
 		  "input":[ "base","height"],
 		  "output":[ "Area" ],
 		  "formula":["0.5*base*height"]
